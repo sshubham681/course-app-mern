@@ -1,38 +1,36 @@
-const express = require('express')
-const router = express.Router()
-
+const express = require("express");
+const router = express.Router();
 
 // user signup
-router.post('/signup', function(req, res){
+router.post("/signup", function (req, res) {
   res.send({
-    msg: 'Sign up'
-  })
-})
+    msg: "Sign up",
+  });
+});
 // user login
-router.post('/login', function(req, res){
+router.post("/login", function (req, res) {
   res.send({
-    msg: 'Login'
-  })
-})
+    msg: "Login",
+  });
+});
 
 // get all courses
-router.get('/courses', function(req, res){
+router.get("/courses", function (req, res) {
   res.send({
-    msg: 'Get all courses'
-  })
-})
+    msg: "Get all courses",
+  });
+});
 // get purchased courses
-router.get('/my-courses', function(req, res){
+router.get("/my-courses", function (req, res) {
   res.send({
-    msg: 'Get purchased courses'
-  })
-})
+    msg: "Get purchased courses",
+  });
+});
 // get all courses
-router.post('/buy-course', function(req, res){
+router.post("/buy-course", function (req, res) {
   res.send({
-    msg: 'Purchase a courses'
-  })
-})
+    msg: "Purchase a courses",
+  });
+});
 
-
-module.exports = router
+module.exports = router;
