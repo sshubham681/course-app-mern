@@ -1,5 +1,5 @@
 const express = require("express");
-const UserModel = require("../models/user-models");
+const UserModel = require("../models/user.models");
 const router = express.Router();
 
 // user signup
