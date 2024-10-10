@@ -1,6 +1,9 @@
 const express = require("express");
-const UserModel = require("../models/user.models");
 const router = express.Router();
+const UserModel = require("../models/user.models");
+const authMiddleware = require('../middleware/auth')
+const jwt = require("jsonwebtoken");
+const JWT_SECRET = process.env.JWT_SECRET;
 
 // user signup
 router.post("/signup", async function (req, res) {
@@ -8,33 +11,40 @@ router.post("/signup", async function (req, res) {
   const password = req.body.password;
   try {
     const foundUser = await UserModel.findOne({ username });
-    console.log(foundUser?.username, "--f");
-    console.log(username, "--username");
     if (foundUser && foundUser?.username === username) {
       res.send({
         message: "User already exist!",
       });
     } else {
+      const token = jwt.sign({ username }, JWT_SECRET);
       await UserModel.create({
         username,
         password,
+        token,
       });
       res.send({
         message: "User got created!",
       });
     }
   } catch (error) {
-    console.log(error, "error");
     res.status(201).send({
       message: "Failed to create user.",
     });
   }
 });
 // user login
-router.post("/login", function (req, res) {
-  res.send({
-    msg: "Login",
-  });
+router.post("/login", async function (req, res) {
+  const username = req.body.username;
+  const foundUser = await UserModel.findOne({ username });
+  if (foundUser.username === username) {
+    res.send({
+      token: foundUser.token,
+    });
+  } else {
+    res.send({
+      msg: "invalid login credentials",
+    });
+  }
 });
 
 // get all courses
@@ -44,7 +54,7 @@ router.get("/courses", function (req, res) {
   });
 });
 // get purchased courses
-router.get("/my-courses", function (req, res) {
+router.get("/my-courses", authMiddleware, function (req, res) {
   res.send({
     msg: "Get purchased courses",
   });
