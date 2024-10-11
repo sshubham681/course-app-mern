@@ -23,7 +23,7 @@ router.post("/signup", async function (req, res) {
         token,
       });
       res.send({
-        message: "User got created!",
+        message: "User created successfully!",
       });
     }
   } catch (error) {
@@ -42,7 +42,7 @@ router.post("/login", async function (req, res) {
     });
   } else {
     res.send({
-      msg: "invalid login credentials",
+      message: "invalid login credentials",
     });
   }
 });
@@ -50,19 +50,19 @@ router.post("/login", async function (req, res) {
 // get all courses
 router.get("/courses", function (req, res) {
   res.send({
-    msg: "Get all courses",
+    message: "Get all courses",
   });
 });
 // get purchased courses
 router.get("/my-courses", authMiddleware, function (req, res) {
   res.send({
-    msg: "Get purchased courses",
+    message: "Get purchased courses",
   });
 });
 // get all courses
 router.post("/buy-course", function (req, res) {
   res.send({
-    msg: "Purchase a courses",
+    message: "Purchase a courses",
   });
 });
 
