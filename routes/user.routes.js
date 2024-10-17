@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcrypt");
 const UserModel = require("../models/user.models");
-const authMiddleware = require("../middleware/auth");
 const jwt = require("jsonwebtoken");
 const JWT_SECRET = process.env.JWT_SECRET;
 
@@ -63,27 +62,6 @@ router.post("/login", async function (req, res) {
       message: "Failed to login",
     });
   }
-});
-
-// get all courses
-router.get("/courses", function (req, res) {
-  res.send({
-    message: "Get all courses",
-  });
-});
-
-// get purchased courses
-router.get("/my-courses", authMiddleware, function (req, res) {
-  res.send({
-    message: "Get purchased courses",
-  });
-});
-
-// get all courses
-router.post("/buy-course", authMiddleware, function (req, res) {
-  res.send({
-    message: "Purchase a courses",
-  });
 });
 
 module.exports = router;
