@@ -1,8 +1,8 @@
 const express = require("express");
-const AdminModel = require("../models/admin.models");
 const router = express.Router();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const { adminModel } = require("../schema");
 const JWT_SECRET = process.env.JWT_SECRET;
 
 // sign up
@@ -10,14 +10,14 @@ router.post("/signup", async function (req, res) {
   const username = req.body.username;
   const password = req.body.password;
   try {
-    const foundAdmin = await AdminModel.findOne({ username });
+    const foundAdmin = await adminModel.findOne({ username });
     if (foundAdmin && foundAdmin.username === username) {
       res.send({
         message: "Admin already exist!",
       });
     } else {
       const hashedPassword = await bcrypt.hash(password, 5);
-      await AdminModel.create({
+      await adminModel.create({
         username,
         password: hashedPassword,
       });
@@ -37,7 +37,7 @@ router.post("/login", async function (req, res) {
   const username = req.body.username;
   const password = req.body.password;
   try {
-    const foundUser = await AdminModel.findOne({ username });
+    const foundUser = await adminModel.findOne({ username });
     if (foundUser) {
       const passwordMatch = await bcrypt.compare(password, foundUser.password);
       if (foundUser.username === username) {

@@ -1,18 +1,18 @@
-const express = require('express')
-const router = express.Router()
+const express = require("express");
+const router = express.Router();
 
 // Get all courses
-router.get('/courses', function(req, res) {
+router.get("/courses", function (req, res) {
   res.send({
-    message: 'All courses'
-  })
-})
+    message: "All courses",
+  });
+});
 // Get all courses
-router.get('/my-courses', function(req, res) {
+router.get("/my-courses", function (req, res) {
   res.send({
-    message: 'My courses'
-  })
-})
+    message: "My courses",
+  });
+});
 
 // create course
 router.post("/create-course", function (req, res) {
@@ -35,4 +35,4 @@ router.patch("/course/:id", function (req, res) {
   });
 });
 
-module.exports = router
+module.exports = router;

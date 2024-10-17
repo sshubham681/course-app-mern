@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcrypt");
-const UserModel = require("../models/user.models");
 const jwt = require("jsonwebtoken");
+const { userModel } = require("../schema");
 const JWT_SECRET = process.env.JWT_SECRET;
 
 // user signup
@@ -10,14 +10,14 @@ router.post("/signup", async function (req, res) {
   const username = req.body.username;
   const password = req.body.password;
   try {
-    const foundUser = await UserModel.findOne({ username });
+    const foundUser = await userModel.findOne({ username });
     if (foundUser && foundUser?.username === username) {
       res.send({
         message: "User already exist!",
       });
     } else {
       const hashedPassword = await bcrypt.hash(password, 5);
-      await UserModel.create({
+      await userModel.create({
         username,
         password: hashedPassword,
       });
@@ -37,7 +37,7 @@ router.post("/login", async function (req, res) {
   const username = req.body.username;
   const password = req.body.password;
   try {
-    const foundUser = await UserModel.findOne({ username });
+    const foundUser = await userModel.findOne({ username });
     if (foundUser) {
       const passwordMatch = await bcrypt.compare(password, foundUser.password);
       if (foundUser.username === username) {
